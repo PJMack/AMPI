@@ -1,0 +1,57 @@
+.TH AMPI_TUTORIAL 7  
+.SH SYNOPSYS
+AMPI (\fBA\fRstraction Layer for \fBMPI\fR) is an API designed to allow a program to call a function in another machine.
+It is a layer between the user application and MPI to ease the process of developing heterogenious multiprocess program.
+It is writen in C++11 to take advantage of it's built in data type, threading library, and polymorphism.
+This (informal) tutorial goes through how to use AMPI.
+Before you begin, you should make sure you have a basic understanding of C++ classes and polymorphism.
+.SH HOW AMPI WORKS
+Black Magic... Okay, maybe not, but AMPI is rather complex and the details of the inside of AMPI are a nightmare to explain without animated visuals, and this is a man page.
+What you should know is that when making a remote call, the function name and parameters have to be sent to the other process (usually over a network) as a stream of characters, then what the function returns will need to be sent back.
+If the data is in one peice in memory, there would be no problem, however if the data was more complex, such as a linked list, then the data would have to be organize before sending.
+Fortunatly, most classes already have capabilitys of this organization: File IO, so AMPI takes advantage of this.
+.SH THE AMPI_base CLASS
+All data that goes through the AMPI layer must inherit the \fBAMPI_base\fR class.
+This class contains three virtual functions that will need to be rewritten by the user
+.IP void\ \fIAMPI_input\fR(char\ *buf,\ int\ size);
+This is the equivlent of reading a file.
+The function needs to an array of characters and convert it into the class.
+.IP char*\ \fIAMPI_output\fR(int\ *size);
+This is the equivlent or writing to a file.
+The function needs to take the class and turn it into an array of characters.
+It will also needs to output the size of that array using the pointer *size.
+.IP char*\ \fIAMPI_typeName\fR();  
+This simply returns a string that is the name of the class.
+.P
+Other virtual functions are provided for advanced ussage and are explained in \fBAMPI_base\fB(7).
+.SH THE AMPI_adaptor CLASS
+This class is provided with AMPI so that simple arguments can be passed.  
+AMPI_adaptor inherits the AMPI_base class and can contain either a char, short, int, long, long long, unsigned short, unsigned, unsigned long, unsigned long long, float, double, or long double.  More information can be found in \fBAMPI_adaptor\fR(7).
+.SH SETTING UP FUNCTIONS FOR REMOTE CALL
+As stated above, all function that will be remotly call must have parameters that inherit AMPI_base.  
+Also, a that function must have no more than five parameters, and at least one of those must be a direct pointer for a value to be returned.
+In other words, one of the parameters needs to be a pointer to type that inherits AMPI_base, and all data to be returned should be put in that class that is points to.  
+There is an example included with AMPI.
+.SH THE AMPI CLASS
+All members of the AMPI class are static, and most of them are internal to AMPI.
+Two of the functions, however need to be completed by the user:
+.IP void\ AMPI::callByName(std::string\ fn,\ AMPI_base*\ p0,\ ...,\ AMPI_base*\ p4);
+This needs to call a function using it's name, and passing the parameters p0,p1, etc.  
+It needs to include all functions that will be remotely called.  
+Type conversions may be done within this function if needed, however any parameters that will be returned need to keep the same pointer address throughout.
+.IP AMPI_base*\ AMPI::newByName(std::string\ type);
+This function needs to return a new class whos type is that specified by the name.
+This is the same name given in the virtual AMPI_base function.
+The function should return 0 for an invalid name.
+.P
+The two functions are mostly cut and paste, and future versions of AMPI may include a script, and an example is included.
+.SH CALLING REMOTELY AND WAITING
+The first line of your main function should be \fIAMPI::init(&argc,&argv);\fR and the last line should be \fIAMPI::deInit();\fR to initialize and deinitalize AMPI execution.
+To call a function remotely, 
+create the parameters, 
+set returnParameter(true) for the parameter(s) that will be returned,
+ then call AMPI::remote_call with the function name and parameters.
+To wait for the result, simpley call AMPI::wait_for with the pointer to the parameter that is being waited for.
+NOTE: The parameter the same as the pointer whos returnParameter was set, otherwise it will not wait.
+.SH COMPILE, LINK, RUN
+since AMPI is so small, it should be included as part of the program, rather than a library.  It needs to be compiled with MPICH, using lpthread and C++11.  It should be run with mpiexec.
