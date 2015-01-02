@@ -1,0 +1,130 @@
+.TH "AMPI" 7 "Fri Jan 2 2015" "AMPI" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+AMPI \- 
+The \fBAMPI\fP class contains static functions for initilizing and making remote calls\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <ampi\&.h>\fP
+.SS "Static Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "static void \fBinit\fP (int *argc, char ***argv)"
+.br
+.ti -1c
+.RI "static void \fBdeInit\fP ()"
+.br
+.ti -1c
+.RI "static void \fBremote_call\fP (std::string fn, \fBAMPI_base\fP *p0=0, \fBAMPI_base\fP *p1=0, \fBAMPI_base\fP *p2=0, \fBAMPI_base\fP *p3=0, \fBAMPI_base\fP *p4=0)"
+.br
+.ti -1c
+.RI "static void \fBcallByName\fP (std::string fn, \fBAMPI_base\fP *p0=0, \fBAMPI_base\fP *p1=0, \fBAMPI_base\fP *p2=0, \fBAMPI_base\fP *p3=0, \fBAMPI_base\fP *p4=0)"
+.br
+.ti -1c
+.RI "static \fBAMPI_base\fP * \fBnewByName\fP (std::string type)"
+.br
+.ti -1c
+.RI "static void \fBwait_for\fP (\fBAMPI_base\fP *)"
+.br
+.ti -1c
+.RI "static int \fBRanks\fP ()"
+.br
+.SH "Detailed Description"
+.PP 
+The \fBAMPI\fP class contains static functions for initilizing and making remote calls\&. 
+.SH "Member Function Documentation"
+.PP 
+.SS "void AMPI::callByName (std::stringfn, \fBAMPI_base\fP *p0 = \fC0\fP, \fBAMPI_base\fP *p1 = \fC0\fP, \fBAMPI_base\fP *p2 = \fC0\fP, \fBAMPI_base\fP *p3 = \fC0\fP, \fBAMPI_base\fP *p4 = \fC0\fP)\fC [static]\fP"
+this function is to be writen by the user so call a function using the name of the function and up to five \fBAMPI_base\fP pointers as parameters that could be cast accordingly 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIfn\fP The function name 
+.br
+\fIp0\fP Function Parameter 
+.br
+\fIp1\fP Function Parameter 
+.br
+\fIp2\fP Function Parameter 
+.br
+\fIp3\fP Function Parameter 
+.br
+\fIp4\fP Function Parameter 
+.RE
+.PP
+
+.SS "void AMPI::deInit ()\fC [static]\fP"
+This needs to be called before exiting\&. This is needed to prevent zombies\&. 
+.SS "void AMPI::init (int *argc, char ***argv)\fC [static]\fP"
+initialize everything\&. This is requred at the begining of main 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIargc\fP pointer to argc from main 
+.br
+\fIargv\fP pointer to **argv from main 
+.RE
+.PP
+
+.SS "\fBAMPI_base\fP * AMPI::newByName (std::stringtype)\fC [static]\fP"
+this function is to be writen (cut and pasted) by the user to create a new \fBAMPI_base\fP by the name of it 
+.PP
+\fBParameters:\fP
+.RS 4
+\fItype\fP this is the string for the name 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+The pointer to the new variable 
+.RE
+.PP
+
+.SS "int AMPI::Ranks ()\fC [static]\fP"
+return the number of ranks (processes) total 
+.PP
+\fBReturns:\fP
+.RS 4
+number of ranks 
+.RE
+.PP
+
+.SS "void AMPI::remote_call (std::stringfn, \fBAMPI_base\fP *p0 = \fC0\fP, \fBAMPI_base\fP *p1 = \fC0\fP, \fBAMPI_base\fP *p2 = \fC0\fP, \fBAMPI_base\fP *p3 = \fC0\fP, \fBAMPI_base\fP *p4 = \fC0\fP)\fC [static]\fP"
+call function remotely using parameters 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIfn\fP function name 
+.br
+\fIp0\fP pointer to \fBAMPI_base\fP 
+.br
+\fIp1\fP pointer to \fBAMPI_base\fP 
+.br
+\fIp2\fP pointer to \fBAMPI_base\fP 
+.br
+\fIp3\fP pointer to \fBAMPI_base\fP 
+.br
+\fIp4\fP pointer to \fBAMPI_base\fP 
+.RE
+.PP
+
+.SS "void AMPI::wait_for (\fBAMPI_base\fP *p)\fC [static]\fP"
+
+.PP
+\fBAMPI::wait_for\fP hold execution until data is returned\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIp\fP the pointer to the data that is being waited for 
+.RE
+.PP
+
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for AMPI from the source code\&.

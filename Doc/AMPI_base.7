@@ -1,0 +1,179 @@
+.TH "AMPI_base" 7 "Fri Jan 2 2015" "AMPI" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+AMPI_base \- 
+.PP
+The \fBAMPI_base\fP class is the base for any classes used as parameters for remote function calls\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBAMPI_base\fP ()"
+.br
+.ti -1c
+.RI "virtual void \fBAMPI_input\fP (char *buf, int size)"
+.br
+.ti -1c
+.RI "virtual char * \fBAMPI_output\fP (int *size)"
+.br
+.ti -1c
+.RI "bool \fBAMPI_isValid\fP ()"
+.br
+.ti -1c
+.RI "bool \fBAMPI_returnParameter\fP (bool)"
+.br
+.ti -1c
+.RI "bool \fBAMPI_returnParameter\fP ()"
+.br
+.ti -1c
+.RI "virtual void \fBAMPI_debug\fP ()"
+.br
+.in -1c
+.SS "Protected Member Functions"
+
+.in +1c
+.ti -1c
+.RI "virtual void \fBAMPI_locked\fP ()"
+.br
+.ti -1c
+.RI "virtual void \fBAMPI_unlocked\fP ()"
+.br
+.ti -1c
+.RI "virtual int \fBAMPI_send\fP (int dest, int tag, MPI_Comm comm)"
+.br
+.ti -1c
+.RI "virtual int \fBAMPI_recv\fP (int source, int tag, MPI_Comm comm, MPI_Status *status)"
+.br
+.ti -1c
+.RI "virtual char * \fBAMPI_typeName\fP ()"
+.br
+.in -1c
+.SS "Friends"
+
+.in +1c
+.ti -1c
+.RI "class \fBAMPI\fP"
+.br
+.ti -1c
+.RI "class \fBAMPI_adaptor\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+The \fBAMPI_base\fP class is the base for any classes used as parameters for remote function calls\&. 
+.SH "Constructor & Destructor Documentation"
+.PP 
+.SS "AMPI_base::AMPI_base ()"
+Initilize the class 
+.SH "Member Function Documentation"
+.PP 
+.SS "void AMPI_base::AMPI_debug ()\fC [virtual]\fP"
+this function is used for debuging \fBAMPI\fP it is not needed for applications\&. 
+.PP
+Reimplemented in \fBAMPI_adaptor\fP\&.
+.SS "void AMPI_base::AMPI_input (char *buf, intsize)\fC [virtual]\fP"
+This function is called by the default \fBAMPI_base::AMPI_recv\fP function to convert the character array received into the inherited class's data format\&. Rewriting this function in the inherited class is required unless using \fBAMPI_base::AMPI_recv\fP, however it should be nearly identical to a function to read the class froma file\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIbuf\fP The character array to read from 
+.br
+\fIsize\fP the size of the array 
+.RE
+.PP
+
+.SS "void AMPI_base::AMPI_locked ()\fC [protected]\fP, \fC [virtual]\fP"
+this optional function is called when the class has been transmitted and it will be modified by another machine\&. 
+.SS "char * AMPI_base::AMPI_output (int *size)\fC [virtual]\fP"
+This function is called by the default \fBAMPI_base::AMPI_send\fP function to convert the inherted class's data format to a character array\&. Rewirting this function in the inherited class is required unless using \fBAMPI_base::AMPI_recv\fP, however it should be nearly identicle to a function to write the class to a file\&. 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIsize\fP pointer to and integer to store the size of the character array 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+the character array 
+.RE
+.PP
+
+.SS "int AMPI_base::AMPI_recv (intsource, inttag, MPI_Commcomm, MPI_Status *status)\fC [protected]\fP, \fC [virtual]\fP"
+This is called by \fBAMPI\fP to receive new data from another class on another machine\&. this can be left alone if using \fBAMPI_base::AMPI_input\fP, however it is left virtual so advanced users my use this function and MPI_Recv to recive the data more efficently 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIsource\fP The source of the data 
+.br
+\fItag\fP The MPI tag that to receive from 
+.br
+\fIcomm\fP The MPI communicant 
+.br
+\fIstatus\fP Pointer to an external status variable 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+.RE
+.PP
+
+.SS "bool AMPI_base::AMPI_returnParameter (boolrP)"
+setting rP to true indecates to \fBAMPI\fP that the class will be modified during a remote call and need to be sent back 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIrP\fP 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+.RE
+.PP
+
+.SS "bool AMPI_base::AMPI_returnParameter ()"
+this indecates weather or not the class will be returned after a remote call 
+.PP
+\fBReturns:\fP
+.RS 4
+true if the class will be returned 
+.RE
+.PP
+
+.SS "int AMPI_base::AMPI_send (intdest, inttag, MPI_Commcomm)\fC [protected]\fP, \fC [virtual]\fP"
+This is called by \fBAMPI\fP to send data from the class to new copy on another machine\&. This can be left alone if using \fBAMPI_base::AMPI_input\fP, however it is left virtual so advaced users may use this function and MPI_Send to send the data more efficietly 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIdest\fP The destination to be sent to 
+.br
+\fItag\fP The MPI tag to send with 
+.br
+\fIcomm\fP the MPI communicant 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+.RE
+.PP
+
+.SS "char * AMPI_base::AMPI_typeName ()\fC [protected]\fP, \fC [virtual]\fP"
+This function is to be used by \fBAMPI\fP for transmitting, receiving, and handling type names\&. It serves as a unique identify for the class, and is required to be rewriten for inherited classes 
+.PP
+\fBReturns:\fP
+.RS 4
+The name of the class 
+.RE
+.PP
+
+.SS "void AMPI_base::AMPI_unlocked ()\fC [protected]\fP, \fC [virtual]\fP"
+this optional function is called when the class has been returned from a remote function call\&. 
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for AMPI from the source code\&.

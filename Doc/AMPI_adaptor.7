@@ -1,0 +1,96 @@
+.TH "AMPI_adaptor" 7 "Fri Jan 2 2015" "AMPI" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+AMPI_adaptor \- 
+
+.SH SYNOPSIS
+.br
+.PP
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBAMPI_adaptor\fP (const char &val)"
+.br
+.ti -1c
+.RI "\fBAMPI_adaptor\fP (const short &val)"
+.br
+.ti -1c
+.RI "\fBAMPI_adaptor\fP (const int &val)"
+.br
+.ti -1c
+.RI "\fBAMPI_adaptor\fP (const long &val)"
+.br
+.ti -1c
+.RI "\fBAMPI_adaptor\fP (const long long &val)"
+.br
+.ti -1c
+.RI "\fBAMPI_adaptor\fP (const unsigned short &val)"
+.br
+.ti -1c
+.RI "\fBAMPI_adaptor\fP (const unsigned int &val)"
+.br
+.ti -1c
+.RI "\fBAMPI_adaptor\fP (const unsigned long &val)"
+.br
+.ti -1c
+.RI "\fBAMPI_adaptor\fP (const unsigned long long &val)"
+.br
+.ti -1c
+.RI "\fBAMPI_adaptor\fP (const float &val)"
+.br
+.ti -1c
+.RI "\fBAMPI_adaptor\fP (const double &val)"
+.br
+.ti -1c
+.RI "\fBAMPI_adaptor\fP (const long double &val)"
+.br
+.ti -1c
+.RI "\fBoperator char\fP ()"
+.br
+.ti -1c
+.RI "\fBoperator short\fP ()"
+.br
+.ti -1c
+.RI "\fBoperator int\fP ()"
+.br
+.ti -1c
+.RI "\fBoperator long\fP ()"
+.br
+.ti -1c
+.RI "\fBoperator long long\fP ()"
+.br
+.ti -1c
+.RI "\fBoperator unsigned short\fP ()"
+.br
+.ti -1c
+.RI "\fBoperator unsigned int\fP ()"
+.br
+.ti -1c
+.RI "\fBoperator unsigned long\fP ()"
+.br
+.ti -1c
+.RI "\fBoperator unsigned long long\fP ()"
+.br
+.ti -1c
+.RI "\fBoperator float\fP ()"
+.br
+.ti -1c
+.RI "\fBoperator double\fP ()"
+.br
+.ti -1c
+.RI "\fBoperator long double\fP ()"
+.br
+.ti -1c
+.RI "\fBoperator AMPI_base *\fP ()"
+.br
+.ti -1c
+.RI "void \fBAMPI_debug\fP ()"
+.br
+.SH "Detailed Description"
+.PP 
+The \fBAMPI_adaptor\fP class is to allow simple standard data types to be passed to remote functions\&. It contains constructors for converting from a standard data type, and operator overloads for converting to, as well as an operator overload for converting to an \fBAMPI_base\fP pointer\&. 
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for AMPI from the source code\&.
